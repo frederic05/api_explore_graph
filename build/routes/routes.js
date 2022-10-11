@@ -7,6 +7,8 @@ const Sproduit_1 = require("../service/Sproduit");
 const userProfilService_1 = require("../service/userProfilService");
 const SligneOperation_1 = require("../service/SligneOperation");
 exports.router = (0, express_1.Router)();
+//Router AUthentification
+exports.router.post('/authentification', userService_1.authenticate);
 //Router utilisateur
 exports.router.get('/userList', userService_1.getAll);
 exports.router.post('/userAdd', userService_1.addUser);

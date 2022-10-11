@@ -26,7 +26,7 @@ User.init({
         allowNull: false,
     },
     password: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING(255),
         allowNull: false,
     },
     login: {
