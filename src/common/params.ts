@@ -10,6 +10,8 @@ dotenv.config();
         BDhostName  : process.env.HOSTNAME,
         BDdriver    : process.env.DB_DRIVER,
         BDport      : process.env.PORT_DATABASE,
+        SECRETKEY   : process.env.SECRETKEY,
+        EXPIRE      : process.env.EXPIRE
     } 
 
 export default appParams

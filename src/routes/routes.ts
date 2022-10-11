@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {getAll, addUser} from '../service/userService';
+import {getAll, addUser, authenticate} from '../service/userService';
 import {getProduit, addProduit } from '../service/Sproduit';
 import {getProfil, addProfil} from '../service/userProfilService';
 import {getLigneOperation, addLigneOperation} from '../service/SligneOperation';
@@ -7,6 +7,8 @@ import {getLigneOperation, addLigneOperation} from '../service/SligneOperation';
 
 export const router = Router()
 
+//Router AUthentification
+router.post('/authentification', authenticate);
 //Router utilisateur
 router.get('/userList', getAll);
 router.post('/userAdd', addUser);
