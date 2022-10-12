@@ -16,7 +16,7 @@ const supertest_1 = __importDefault(require("supertest"));
 const serveurParams_1 = __importDefault(require("../common/serveurParams"));
 const cnx_1 = __importDefault(require("../bd/cnx"));
 const retourParams_1 = require("../common/retourParams");
-describe('Nouvelle suite de test utilisateur', () => {
+describe('Nouvelle suite de test profil utilisateur', () => {
     beforeEach(() => { cnx_1.default; });
     afterEach(() => { cnx_1.default; });
     //liste des utlisateurs
@@ -40,14 +40,14 @@ describe('Nouvelle suite de test utilisateur', () => {
             });
             expect(res.statusCode).toEqual(retourParams_1.response.errSaisi.statut);
         }));
-        it('Retourne 201 dans l\' utilisateur existe', () => __awaiter(void 0, void 0, void 0, function* () {
+        it('Retourne 201 lorsque le profil utilisateur existe', () => __awaiter(void 0, void 0, void 0, function* () {
             const res = yield (0, supertest_1.default)(serveurParams_1.default).post('/profilAdd')
                 .send({
                 "libelle": "SUPERVISEUR"
             });
             expect(res.statusCode).toEqual(retourParams_1.response.errRes.statut);
         }));
-        it('Retourne 200 lorsque utilisateur est creer ', () => __awaiter(void 0, void 0, void 0, function* () {
+        it('Retourne 200 lorsque le profil utilisateur est creer ', () => __awaiter(void 0, void 0, void 0, function* () {
             const res = yield (0, supertest_1.default)(serveurParams_1.default).post('/profilAdd')
                 .send({
                 "libelle": "SUPERVISEUR"

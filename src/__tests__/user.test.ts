@@ -28,8 +28,8 @@ describe('Nouvelle suite de test prifil utilisateur', ()=>{
 
        //Insertion d'un utlisateur
        describe('Ajout des utlisateurs des utilisateurs', ()=>{
-                
-               it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+               
+                it('Retour 400 quand un champ obligatoire est vide !', async()=>{
                   const res = await request(app).post('/userAdd')
                               .send({
                                        firstname: "",
@@ -53,9 +53,9 @@ describe('Nouvelle suite de test prifil utilisateur', ()=>{
                                              status: true
                                          });
                        expect(res.statusCode).toEqual(response.errRes.statut);  
-              }); 
+                }); 
                 
-              it('Retourne 200 quand utilisateur est creer', async()=>{
+                it('Retourne 200 quand utilisateur est creer', async()=>{
                   const res = await request(app).post('/userAdd')
                                .send({
                                         firstname: "Nguessan",
@@ -66,7 +66,37 @@ describe('Nouvelle suite de test prifil utilisateur', ()=>{
                                         status: true
                                     });
                   expect(res.statusCode).toEqual(response.succes.statut);  
+                });        
+       });
+
+       describe('suite de test authentification utilisateur', ()=>{
+        
+                it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+                  const res =  await request(app).post('/authentification')
+                                    .send({
+                                      "login": "",
+                                      "password": ""
+                                  });
+                  expect(res.statusCode).toEqual(response.errSaisi.statut); 
                 });
-                
+
+                it('Retour 404 quand lors les acces ne sont pas correcte !', async()=>{
+                  const res =  await request(app).post('/authentification')
+                                    .send({
+                                      "login": "tttest",
+                                      "password": "ddffrr"
+                                  });
+                  expect(res.statusCode).toEqual(response.errRessource.statut); 
+                });
+
+                it('Retourne 200 quand quand les acces sont bon', async()=>{
+                  const res = await request(app).post('/authentification')
+                              .send({
+                                "login": "rose@",
+                                "password": "12345"
+                            });
+                  expect(res.statusCode).toEqual(response.succes.statut);  
+                });
+
        });
     });

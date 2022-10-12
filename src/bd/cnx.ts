@@ -22,10 +22,10 @@ const sequelize = new Sequelize(bdName, bdUsername, bdPassword, {
     }
 });
 
-(async () => {
+/*(async () => {
     await sequelize.sync({ alter: false })
                    .then(res => console.log("synchronisation effectuée avec succes !"))
                    .catch(err => console.log("error synchronisation !", err));
-  })();
+  })();*/
 
 export default sequelize;
