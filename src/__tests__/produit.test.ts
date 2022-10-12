@@ -51,5 +51,38 @@ describe('Nouvelle suite de test produit', ()=>{
                                 });
                    expect(res.statusCode).toEqual(response.succes.statut);  
            });
-        });       
+        });  
+        
+        describe('Modification informations produit', ()=>{
+               
+          it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+            const res = await request(app).put('/produitUpdate')
+                        .send({
+                          id: "",
+                          "code": "",
+                          "libelle": ""
+                      });
+           expect(res.statusCode).toEqual(response.errSaisi.statut);  
+          });
+  
+          it('Retour 404 quand le produit est introuvable', async()=>{
+            const res = await request(app).put('/produitUpdate')
+                              .send({
+                                id: 111,
+                                "code": "TETTS",
+                                "libelle": "TETTS"
+                            });
+                 expect(res.statusCode).toEqual(response.errRessource.statut);  
+          }); 
+          
+          it('Retourne 200 quand le produit est mis à jour', async()=>{
+            const res = await request(app).put('/produitUpdate')
+                         .send({
+                          id: 1,
+                          "code": "CAC40",
+                          "libelle": "CAC40 NEW"
+                      });
+            expect(res.statusCode).toEqual(response.succes.statut);  
+          });        
+         });
     });

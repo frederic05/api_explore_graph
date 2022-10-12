@@ -58,6 +58,37 @@ export const addUser: RequestHandler = async(req: Request, res: Response, next: 
    }
 }
 
+//mises à jour utilisateur
+export const updateUser: RequestHandler = async(req: Request, res: Response, next: NextFunction)=>{
+
+    const {id, firstname, lastname, email,login, status}: User = req.body;
+
+    if(!id || !firstname || !lastname || !email || !login || !status){
+        return res.status(response.errSaisi.statut).json({message : response.errSaisi.message});
+    }
+
+   try {
+          await User.findOne({ where: { id : id} })
+                .then(retour =>{
+                    if(retour !== null){
+                        User.update(req.body, {where : {id: id}})
+                                .then(result =>{
+                                        if(result !== null){
+                                            return res.status(response.succes.statut).json({message : response.succes.message});
+                                        }else{
+                                            return res.status(response.errServeur.statut).json({message : response.errServeur.message});
+                                        }
+                                        })                  
+                    }else{
+                        return res.status(response.errRessource.statut).json({message: response.errRessource.message});                        
+                    }
+                })                   
+   } catch (error) {
+            console.log('erreur interne survenue !', error);
+   }
+}
+
+//fonction d'authentification
 export const authenticate: RequestHandler = async(req: Request, res: Response, next: NextFunction)=>{
     
     const {login, password} = req.body

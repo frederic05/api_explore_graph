@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addProduit = exports.getProduit = void 0;
+exports.UpdateProduit = exports.addProduit = exports.getProduit = void 0;
 const retourParams_1 = require("../common/retourParams");
 const Mproduit_1 = __importDefault(require("../models/Mproduit"));
 //Liste des produits
@@ -63,3 +63,33 @@ const addProduit = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.addProduit = addProduit;
+//mises à jour produit
+const UpdateProduit = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, code, libelle } = req.body;
+    if (!id || !code || !libelle) {
+        return res.status(retourParams_1.response.errSaisi.statut).json({ message: retourParams_1.response.errSaisi.message });
+    }
+    try {
+        yield Mproduit_1.default.findOne({ where: { id: id } })
+            .then(retour => {
+            if (retour !== null) {
+                Mproduit_1.default.update(req.body, { where: { id: id } })
+                    .then(result => {
+                    if (result !== null) {
+                        return res.status(retourParams_1.response.succes.statut).json({ message: retourParams_1.response.succes.message });
+                    }
+                    else {
+                        return res.status(retourParams_1.response.errServeur.statut).json({ message: retourParams_1.response.errServeur.message });
+                    }
+                });
+            }
+            else {
+                return res.status(retourParams_1.response.errRessource.statut).json({ message: retourParams_1.response.errRessource.message });
+            }
+        });
+    }
+    catch (error) {
+        console.log('erreur interne survenue !', error);
+    }
+});
+exports.UpdateProduit = UpdateProduit;

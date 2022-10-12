@@ -58,4 +58,33 @@ describe('Nouvelle suite de test produit', () => {
             expect(res.statusCode).toEqual(retourParams_1.response.succes.statut);
         }));
     });
+    describe('Modification informations produit', () => {
+        it('Retour 400 quand un champ obligatoire est vide !', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/produitUpdate')
+                .send({
+                id: "",
+                "code": "",
+                "libelle": ""
+            });
+            expect(res.statusCode).toEqual(retourParams_1.response.errSaisi.statut);
+        }));
+        it('Retour 404 quand le produit est introuvable', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/produitUpdate')
+                .send({
+                id: 111,
+                "code": "TETTS",
+                "libelle": "TETTS"
+            });
+            expect(res.statusCode).toEqual(retourParams_1.response.errRessource.statut);
+        }));
+        it('Retourne 200 quand le produit est mis à jour', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/produitUpdate')
+                .send({
+                id: 1,
+                "code": "CAC40",
+                "libelle": "CAC40 NEW"
+            });
+            expect(res.statusCode).toEqual(retourParams_1.response.succes.statut);
+        }));
+    });
 });

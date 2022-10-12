@@ -48,5 +48,35 @@ describe('Nouvelle suite de test profil utilisateur', ()=>{
                                   });
                    expect(res.statusCode).toEqual(response.succes.statut);  
            });
-        });       
+        });  
+        
+        describe('Modification informations profil utilisateur', ()=>{
+               
+          it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+            const res = await request(app).put('/profilUdpate')
+                        .send({
+                          id : "",
+                          "libelle": ""
+                          });
+           expect(res.statusCode).toEqual(response.errSaisi.statut);  
+          });
+  
+          it('Retour 404 quand le profil utilisateur est introuvable', async()=>{
+            const res = await request(app).put('/profilUdpate')
+                              .send({
+                                id : 11,
+                                "libelle": "SUPERVISEUR"
+                                });
+                 expect(res.statusCode).toEqual(response.errRessource.statut);  
+          }); 
+          
+          it('Retourne 200 quand le profil utilisateur est mis à jour', async()=>{
+            const res = await request(app).put('/profilUdpate')
+                         .send({
+                          id : 4,
+                          "libelle": "SUPERVISEUR NEW"
+                          });
+            expect(res.statusCode).toEqual(response.succes.statut);  
+          });        
+         });
     });

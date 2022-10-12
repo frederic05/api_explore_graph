@@ -69,6 +69,49 @@ describe('Nouvelle suite de test prifil utilisateur', ()=>{
                 });        
        });
 
+       describe('Modification informations utilisateur', ()=>{
+               
+        it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+          const res = await request(app).put('/userUpdate')
+                      .send({
+                               id:"",
+                               firstname: "",
+                               lastname: "",
+                               email: "",
+                               login: "daniel@",
+                               status: true
+                           });
+         expect(res.statusCode).toEqual(response.errSaisi.statut);  
+        });
+
+        it('Retour 404 quand utilisateur introuvable', async()=>{
+          const res = await request(app).put('/userUpdate')
+                            .send({
+                                    id:2,
+                                     firstname: "Nguessan",
+                                     lastname: "yapi frederic daniel",
+                                     email: "daniel005@gmail.com",
+                                     password: "daniel",
+                                     login: "daniel@",
+                                     status: true
+                                 });
+               expect(res.statusCode).toEqual(response.errRessource.statut);  
+        }); 
+        
+        it('Retourne 200 quand utilisateur est mis à jour', async()=>{
+          const res = await request(app).put('/userUpdate')
+                       .send({
+                                id:30,
+                                firstname: "Gbamele",
+                                lastname: "rose NEW",
+                                email: "rose004@gmail.com",
+                                login: "rose@",
+                                status: true
+                            });
+          expect(res.statusCode).toEqual(response.succes.statut);  
+        });        
+       });
+
        describe('suite de test authentification utilisateur', ()=>{
         
                 it('Retour 400 quand un champ obligatoire est vide !', async()=>{

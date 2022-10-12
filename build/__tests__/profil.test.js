@@ -55,4 +55,30 @@ describe('Nouvelle suite de test profil utilisateur', () => {
             expect(res.statusCode).toEqual(retourParams_1.response.succes.statut);
         }));
     });
+    describe('Modification informations profil utilisateur', () => {
+        it('Retour 400 quand un champ obligatoire est vide !', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/profilUdpate')
+                .send({
+                id: "",
+                "libelle": ""
+            });
+            expect(res.statusCode).toEqual(retourParams_1.response.errSaisi.statut);
+        }));
+        it('Retour 404 quand le profil utilisateur est introuvable', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/profilUdpate')
+                .send({
+                id: 11,
+                "libelle": "SUPERVISEUR"
+            });
+            expect(res.statusCode).toEqual(retourParams_1.response.errRessource.statut);
+        }));
+        it('Retourne 200 quand le profil utilisateur est mis à jour', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/profilUdpate')
+                .send({
+                id: 4,
+                "libelle": "SUPERVISEUR NEW"
+            });
+            expect(res.statusCode).toEqual(retourParams_1.response.succes.statut);
+        }));
+    });
 });

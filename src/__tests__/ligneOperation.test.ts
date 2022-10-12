@@ -57,5 +57,45 @@ describe('Nouvelle suite de test produit', ()=>{
                                 });
                    expect(res.statusCode).toEqual(response.succes.statut);  
            });
-        });       
+        });  
+       
+        
+        describe('Modification informations ligne operation', ()=>{
+               
+          it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+            const res = await request(app).put('/ligneOperationAUpdate')
+                        .send({
+                          id: "",
+                          "code": "",
+                          "libelle": "",
+                          "value": "",
+                          "produit": ""
+                      });
+           expect(res.statusCode).toEqual(response.errSaisi.statut);  
+          });
+  
+          it('Retour 404 quand la ligne operation est introuvable', async()=>{
+            const res = await request(app).put('/ligneOperationAUpdate')
+                              .send({
+                                id: 111,
+                                "code": "CAC40",
+                                "libelle": "CAC40",
+                                "value": "145",
+                                "produit": 1
+                            });
+                 expect(res.statusCode).toEqual(response.errRessource.statut);  
+          }); 
+          
+          it('Retourne 200 quand le produit est mis à jour', async()=>{
+            const res = await request(app).put('/ligneOperationAUpdate')
+                         .send({
+                          id: 1,
+                          "code": "CAC40",
+                          "libelle": "CAC40 NEW",
+                          "value": "145",
+                          "produit": 1
+                      });
+            expect(res.statusCode).toEqual(response.succes.statut);  
+          });        
+         });
     });

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticate = exports.addUser = exports.getAll = void 0;
+exports.authenticate = exports.updateUser = exports.addUser = exports.getAll = void 0;
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const retourParams_1 = require("../common/retourParams");
@@ -71,6 +71,37 @@ const addUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.addUser = addUser;
+//mises à jour utilisateur
+const updateUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, firstname, lastname, email, login, status } = req.body;
+    if (!id || !firstname || !lastname || !email || !login || !status) {
+        return res.status(retourParams_1.response.errSaisi.statut).json({ message: retourParams_1.response.errSaisi.message });
+    }
+    try {
+        yield userModel_1.default.findOne({ where: { id: id } })
+            .then(retour => {
+            if (retour !== null) {
+                userModel_1.default.update(req.body, { where: { id: id } })
+                    .then(result => {
+                    if (result !== null) {
+                        return res.status(retourParams_1.response.succes.statut).json({ message: retourParams_1.response.succes.message });
+                    }
+                    else {
+                        return res.status(retourParams_1.response.errServeur.statut).json({ message: retourParams_1.response.errServeur.message });
+                    }
+                });
+            }
+            else {
+                return res.status(retourParams_1.response.errRessource.statut).json({ message: retourParams_1.response.errRessource.message });
+            }
+        });
+    }
+    catch (error) {
+        console.log('erreur interne survenue !', error);
+    }
+});
+exports.updateUser = updateUser;
+//fonction d'authentification
 const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { login, password } = req.body;
     if (!login || !password) {

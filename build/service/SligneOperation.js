@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addLigneOperation = exports.getLigneOperation = void 0;
+exports.UpdateLigneOperation = exports.addLigneOperation = exports.getLigneOperation = void 0;
 const retourParams_1 = require("../common/retourParams");
 const MligneOperation_1 = __importDefault(require("../models/MligneOperation"));
 //Liste des produits
@@ -63,3 +63,33 @@ const addLigneOperation = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
 });
 exports.addLigneOperation = addLigneOperation;
+//mises à jour ligne opération
+const UpdateLigneOperation = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id, code, libelle, value, produit } = req.body;
+    if (!id || !code || !libelle || !value || !produit) {
+        return res.status(retourParams_1.response.errSaisi.statut).json({ message: retourParams_1.response.errSaisi.message });
+    }
+    try {
+        yield MligneOperation_1.default.findOne({ where: { id: id } })
+            .then(retour => {
+            if (retour !== null) {
+                MligneOperation_1.default.update(req.body, { where: { id: id } })
+                    .then(result => {
+                    if (result !== null) {
+                        return res.status(retourParams_1.response.succes.statut).json({ message: retourParams_1.response.succes.message });
+                    }
+                    else {
+                        return res.status(retourParams_1.response.errServeur.statut).json({ message: retourParams_1.response.errServeur.message });
+                    }
+                });
+            }
+            else {
+                return res.status(retourParams_1.response.errRessource.statut).json({ message: retourParams_1.response.errRessource.message });
+            }
+        });
+    }
+    catch (error) {
+        console.log('erreur interne survenue !', error);
+    }
+});
+exports.UpdateLigneOperation = UpdateLigneOperation;
