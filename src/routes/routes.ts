@@ -11,7 +11,7 @@ export const router = Router()
 //Router AUthentification
 router.post('/authentification', authenticate);
 //Router utilisateur
-router.get('/userList', getAll);
+router.get('/userList', tokenVerif,  getAll);
 router.post('/userAdd', addUser);
 router.put('/userUpdate', updateUser);
 //Router profil

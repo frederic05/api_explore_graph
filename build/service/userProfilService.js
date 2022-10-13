@@ -21,7 +21,7 @@ const getProfil = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         yield userProfilModel_1.default.findAll()
             .then(resultat => {
             if (resultat.length > 0) {
-                return res.status(retourParams_1.response.succes.statut).json({ data: resultat });
+                return res.status(retourParams_1.response.succes.statut).json(resultat);
             }
             else {
                 return res.status(retourParams_1.response.errRessource.statut).json({ message: retourParams_1.response.errRessource.message });

@@ -27,14 +27,24 @@ describe('Nouvelle suite de test profil utilisateur', () => {
             expect(res.statusCode).toEqual(retourParams_1.response.errRessource.statut);
         }));
         it('retourne 200 quand un profil est trouvé', () => __awaiter(void 0, void 0, void 0, function* () {
-            const res = yield (0, supertest_1.default)(serveurParams_1.default).get('/profilList');
-            expect(res.statusCode).toEqual(retourParams_1.response.succes.statut);
+            const { body, statusCode } = yield (0, supertest_1.default)(serveurParams_1.default).get('/profilList');
+            /*expect(body).toEqual(
+              expect.arrayContaining([
+                expect.objectContaining({id: expect.any(Number),
+                  libelle:   expect.any(String),
+                  createdAt: expect.any(Date),
+                  updatedAt: expect.any(Date),
+                  deletedAt: expect.any(Date)
+                })])
+            )*/
+            expect(statusCode).toBe(retourParams_1.response.succes.statut);
         }));
     });
     //Insertion d'un utlisateur
     describe('Ajout profil des utilisateurs', () => {
         it('Retourne 400 quand les valeurs ne sont pas passer', () => __awaiter(void 0, void 0, void 0, function* () {
             const res = yield (0, supertest_1.default)(serveurParams_1.default).post('/profilAdd')
+                .set('Content-Type', 'application/json')
                 .send({
                 "libelle": ""
             });
@@ -74,6 +84,7 @@ describe('Nouvelle suite de test profil utilisateur', () => {
         }));
         it('Retourne 200 quand le profil utilisateur est mis à jour', () => __awaiter(void 0, void 0, void 0, function* () {
             const res = yield (0, supertest_1.default)(serveurParams_1.default).put('/profilUdpate')
+                .set('Content-Type', 'application/json')
                 .send({
                 id: 4,
                 "libelle": "SUPERVISEUR NEW"

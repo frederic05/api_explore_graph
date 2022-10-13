@@ -8,7 +8,7 @@ export const getProfil: RequestHandler = async(req, res, next)=>{
           await CProfil.findAll()
           .then(resultat =>{
                 if(resultat.length > 0){
-                    return res.status(response.succes.statut).json({data: resultat});
+                    return res.status(response.succes.statut).json(resultat);
                 }else{
                     return res.status(response.errRessource.statut).json({message: response.errRessource.message});
                 }

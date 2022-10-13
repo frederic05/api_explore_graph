@@ -11,7 +11,7 @@ exports.router = (0, express_1.Router)();
 //Router AUthentification
 exports.router.post('/authentification', userService_1.authenticate);
 //Router utilisateur
-exports.router.get('/userList', userService_1.getAll);
+exports.router.get('/userList', verifToken_1.tokenVerif, userService_1.getAll);
 exports.router.post('/userAdd', userService_1.addUser);
 exports.router.put('/userUpdate', userService_1.updateUser);
 //Router profil

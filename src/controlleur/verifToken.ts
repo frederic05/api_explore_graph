@@ -13,20 +13,28 @@ const extraBaerer = (authorization: string):any =>{
 
 export const tokenVerif = (req: Request , res: Response, next: NextFunction) => {
 
-    
-
-    const token = req.headers.authorization && extraBaerer(req.headers.authorization)
+    const token: string = req.headers.authorization && extraBaerer(req.headers.authorization)
     
     if(!token){
         return res.status(401).send({message: 'token non present!'})
     } 
+
     // varifier la validiter du toke
-            jwt.verify(token, (appParams.SECRETKEY) as string, (err: any)=>{
-                if(err){
-                return res.status(401).send({message: 'session expirée vueillez vous reconnecter !'})
-                }
-                next()
-        });   
-      next();
-      
+    try {
+        let vrecord = funTest(token)
+                   if(!vrecord){
+                    return res.status(401).send({message: 'session expirée vueillez vous reconnecter !'});
+                    }
+                    next()
+    } catch (error) {       
+        console.log('error', error)
+    }
+    }
+
+    const funTest = <T>(token: string):T | null=>{
+        try {         
+            return jwt.verify(token, (appParams.SECRETKEY) as string) as T;
+          } catch (error) {
+            return null;
+          }
     }

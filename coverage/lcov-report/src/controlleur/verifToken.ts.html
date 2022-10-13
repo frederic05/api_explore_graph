@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">47.05% </span>
+                <span class="strong">81.81% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>8/17</span>
+                <span class='fraction'>18/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/7</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">43.75% </span>
+                <span class="strong">80.95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/16</span>
+                <span class='fraction'>17/21</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -94,34 +94,50 @@
 <a name='L29'></a><a href='#L29'>29</a>
 <a name='L30'></a><a href='#L30'>30</a>
 <a name='L31'></a><a href='#L31'>31</a>
-<a name='L32'></a><a href='#L32'>32</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -130,32 +146,40 @@ import { Request, Response, NextFunction} from 'express';
 import appParams          from '../common/params'; 
 &nbsp;
 //varification du type du token
-const extraBaerer = <span class="fstat-no" title="function not covered" >(a</span>uthorization: string):any =&gt;{
-<span class="cstat-no" title="statement not covered" >    <span class="missing-if-branch" title="if path not taken" >I</span>if(typeof authorization !== 'string'){</span>
+const extraBaerer = (authorization: string):any =&gt;{
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(typeof authorization !== 'string'){
 <span class="cstat-no" title="statement not covered" >        return false</span>
     }
-    const matches = <span class="cstat-no" title="statement not covered" >authorization.match(/(bearer)\s+(\S+)/i)</span>
-<span class="cstat-no" title="statement not covered" >    return matches &amp;&amp; matches[2]</span>
+    const matches = authorization.match(/(bearer)\s+(\S+)/i)
+    return matches &amp;&amp; matches[2]
 }
 &nbsp;
 export const tokenVerif = (req: Request , res: Response, next: NextFunction) =&gt; {
 &nbsp;
-    
-&nbsp;
-    const token = req.headers.authorization &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >extraBaerer(req.headers.authorization)</span>
+    const token: string = req.headers.authorization &amp;&amp; extraBaerer(req.headers.authorization)
     
     if(!token){
         return res.status(401).send({message: 'token non present!'})
     } 
+&nbsp;
     // varifier la validiter du toke
-<span class="cstat-no" title="statement not covered" >            jwt.verify(token, (appParams.SECRETKEY) as string, <span class="fstat-no" title="function not covered" >(e</span>rr: any)=&gt;{</span>
-<span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>if(err){</span>
-<span class="cstat-no" title="statement not covered" >                return res.status(401).send({message: 'session expirée vueillez vous reconnecter !'})</span>
-                }
-<span class="cstat-no" title="statement not covered" >                next()</span>
-        });   
-<span class="cstat-no" title="statement not covered" >      next();</span>
-      
+    try {
+        let vrecord = funTest(token)
+                   <span class="missing-if-branch" title="if path not taken" >I</span>if(!vrecord){
+<span class="cstat-no" title="statement not covered" >                    return res.status(401).send({message: 'session expirée vueillez vous reconnecter !'});</span>
+                    }
+                    next()
+    } catch (error) {       
+<span class="cstat-no" title="statement not covered" >        console.log('error', error)</span>
+    }
+    }
+&nbsp;
+    const funTest = &lt;T&gt;(token: string):T | null=&gt;{
+        try {         
+            return jwt.verify(token, (appParams.SECRETKEY) as string) as T;
+          } catch (error) {
+<span class="cstat-no" title="statement not covered" >            return null;</span>
+          }
     }</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -163,7 +187,7 @@ export const tokenVerif = (req: Request , res: Response, next: NextFunction) =&g
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2022-10-12T19:30:32.308Z
+                at 2022-10-13T13:56:36.647Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

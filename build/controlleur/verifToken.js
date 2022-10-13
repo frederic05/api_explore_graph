@@ -20,12 +20,23 @@ const tokenVerif = (req, res, next) => {
         return res.status(401).send({ message: 'token non present!' });
     }
     // varifier la validiter du toke
-    jsonwebtoken_1.default.verify(token, (params_1.default.SECRETKEY), (err) => {
-        if (err) {
+    try {
+        let vrecord = funTest(token);
+        if (!vrecord) {
             return res.status(401).send({ message: 'session expirée vueillez vous reconnecter !' });
         }
         next();
-    });
-    next();
+    }
+    catch (error) {
+        console.log('error', error);
+    }
 };
 exports.tokenVerif = tokenVerif;
+const funTest = (token) => {
+    try {
+        return jsonwebtoken_1.default.verify(token, (params_1.default.SECRETKEY));
+    }
+    catch (error) {
+        return null;
+    }
+};

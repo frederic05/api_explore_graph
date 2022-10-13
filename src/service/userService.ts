@@ -114,7 +114,7 @@ export const authenticate: RequestHandler = async(req: Request, res: Response, n
                                     login:      resultat.login,
                                     status:     resultat.status
                                 
-                            },(appParams.SECRETKEY) as string,{expiresIn : appParams.EXPIRE});
+                            },(appParams.SECRETKEY) as string, {expiresIn : appParams.EXPIRE});
                             return res.status(response.succes.statut).json({data: token});
                         }
                     }).catch(error=>{

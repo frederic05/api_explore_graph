@@ -1,17 +1,55 @@
-import request from 'supertest';
-import app from '../common/serveurParams';
-import sequelize from '../bd/cnx';
+import request     from 'supertest';
+import app         from '../common/serveurParams';
+import sequelize   from '../bd/cnx';
 import {response}  from '../common/retourParams';
 
+interface DataToken {
+  data: string
+}
 describe('Nouvelle suite de test prifil utilisateur', ()=>{
 
-    beforeEach(() => {
-        sequelize;
+    beforeAll(() => {
+        sequelize.authenticate();
       });
       
-      afterEach(() => {
-        sequelize;
+      afterAll(async() => {
+        sequelize.close();
       });
+
+      let tokenData :DataToken;
+
+      describe('suite de test authentification utilisateur', ()=>{
+        
+        it('Retour 400 quand un champ obligatoire est vide !', async()=>{
+          const res =  await request(app).post('/authentification')
+                            .send({
+                              "login": "",
+                              "password": ""
+                          });
+          expect(res.statusCode).toEqual(response.errSaisi.statut); 
+        });
+
+        it('Retour 404 quand lors les acces ne sont pas correcte !', async()=>{
+          const res =  await request(app).post('/authentification')
+                            .send({
+                              "login": "tttest",
+                              "password": "ddffrr"
+                          });
+          expect(res.statusCode).toEqual(response.errRessource.statut); 
+        });
+
+        it('Retourne 200 quand quand les acces sont bon', async()=>{
+          const {statusCode, body} = await request(app).post('/authentification')
+                      .send({
+                        "login": "rose@",
+                        "password": "12345"
+                    });
+                    tokenData = body
+          expect(statusCode).toEqual(response.succes.statut);  
+        });
+        
+
+});
 
         describe('liste des utilisateurs', ()=>{
                 it('Retourne 404 quand aucun utilisateur trouvé', async()=>{
@@ -21,8 +59,11 @@ describe('Nouvelle suite de test prifil utilisateur', ()=>{
                 });
                //test avec supertest
                 it('Retourn 200 quand au moins un utilisateur est trouvé ', async()=>{
-                const res = await request(app).get('/userList');
-                        expect(res.statusCode).toEqual(response.succes.statut);
+                  console.log('TOKEN DATA', tokenData);
+                const res = await request(app).get('/userList')
+                                  .set('Authorization', `Bearer ${tokenData.data}`)
+                                expect(res.statusCode).toEqual(response.succes.statut);
+                                expect(Array.isArray(res.body)).toBeTruthy()
                 });
        });
 
@@ -112,34 +153,5 @@ describe('Nouvelle suite de test prifil utilisateur', ()=>{
         });        
        });
 
-       describe('suite de test authentification utilisateur', ()=>{
-        
-                it('Retour 400 quand un champ obligatoire est vide !', async()=>{
-                  const res =  await request(app).post('/authentification')
-                                    .send({
-                                      "login": "",
-                                      "password": ""
-                                  });
-                  expect(res.statusCode).toEqual(response.errSaisi.statut); 
-                });
-
-                it('Retour 404 quand lors les acces ne sont pas correcte !', async()=>{
-                  const res =  await request(app).post('/authentification')
-                                    .send({
-                                      "login": "tttest",
-                                      "password": "ddffrr"
-                                  });
-                  expect(res.statusCode).toEqual(response.errRessource.statut); 
-                });
-
-                it('Retourne 200 quand quand les acces sont bon', async()=>{
-                  const res = await request(app).post('/authentification')
-                              .send({
-                                "login": "rose@",
-                                "password": "12345"
-                            });
-                  expect(res.statusCode).toEqual(response.succes.statut);  
-                });
-
-       });
+       
     });
